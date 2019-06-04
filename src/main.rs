@@ -30,14 +30,9 @@ fn main() {
     let content_len = content.len();
     let mut state = Chip8State::new(content);
 
-    for i in 1..content_len {
-        state.tick();
-    }
+    state.grid[42] = true;
 
     let mut buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
-
-    let mut grid = vec![false; GRID_WIDTH * GRID_HEIGHT];
-    grid[42] = true;
 
     let mut window = Window::new(
         "Chip-8 Emulator - ESC to exit",
@@ -57,12 +52,14 @@ fn main() {
             let cell_x = x / CELL_SIZE;
             let cell_y = y / CELL_SIZE;
 
-            *cell = if grid[cell_y * GRID_WIDTH + cell_x] {
+            *cell = if state.grid[cell_y * GRID_WIDTH + cell_x] {
                 0xFFFFFF
             } else {
                 0
             };
         }
+
+        state.tick();
 
         // We unwrap here as we want this code to exit if it fails. Real applications may want to handle this in a different way
         window.update_with_buffer(&buffer).unwrap();
