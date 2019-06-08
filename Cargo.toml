@@ -7,4 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+libc = "0.2"
 minifb = "0.11.2"
+rand = "0.3.14"
+num = "0.2.0"
+num-derive = "0.2"
+num-traits = "0.2"
+
